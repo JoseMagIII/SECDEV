@@ -7,6 +7,8 @@ package View;
 
 import Controller.SQLite;
 import Model.Product;
+import Model.User;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +23,34 @@ public class MgmtProduct extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
+    private User loginUser = null;  
+    
+    public MgmtProduct(SQLite sqlite, boolean purchase, boolean add, boolean edit, boolean delete, User thisUser) {
+        initComponents();
+        this.loginUser = thisUser;
+        this.sqlite = sqlite;
+        tableModel = (DefaultTableModel)table.getModel();
+        table.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
+
+//        UNCOMMENT TO DISABLE BUTTONS
+        purchaseBtn.setVisible(purchase);
+        addBtn.setVisible(add);
+        editBtn.setVisible(edit);
+        deleteBtn.setVisible(delete);
+    }
+    
+    public MgmtProduct(SQLite sqlite, boolean purchase, boolean add, boolean edit, boolean delete) {
+        initComponents();
+        this.sqlite = sqlite;
+        tableModel = (DefaultTableModel)table.getModel();
+        table.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
+
+//        UNCOMMENT TO DISABLE BUTTONS
+        purchaseBtn.setVisible(purchase);
+        addBtn.setVisible(add);
+        editBtn.setVisible(edit);
+        deleteBtn.setVisible(delete);
+    }
     
     public MgmtProduct(SQLite sqlite) {
         initComponents();
@@ -29,12 +59,12 @@ public class MgmtProduct extends javax.swing.JPanel {
         table.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
 
 //        UNCOMMENT TO DISABLE BUTTONS
-//        purchaseBtn.setVisible(false);
-//        addBtn.setVisible(false);
-//        editBtn.setVisible(false);
-//        deleteBtn.setVisible(false);
+//        purchaseBtn.setVisible(purchase);
+//        addBtn.setVisible(add);
+//        editBtn.setVisible(edit);
+//        deleteBtn.setVisible(delete);
     }
-
+    
     public void init(){
         //      CLEAR TABLE
         for(int nCtr = tableModel.getRowCount(); nCtr > 0; nCtr--){
@@ -174,6 +204,7 @@ public class MgmtProduct extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void purchaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purchaseBtnActionPerformed
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         if(table.getSelectedRow() >= 0){
             JTextField stockFld = new JTextField("0");
             designer(stockFld, "PRODUCT STOCK");
@@ -185,7 +216,24 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, message, "PURCHASE PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
             if (result == JOptionPane.OK_OPTION) {
-                System.out.println(stockFld.getText());
+                String product = (String) tableModel.getValueAt(table.getSelectedRow(), 0);
+                String amount = stockFld.getText();
+                int stock = (int) tableModel.getValueAt(table.getSelectedRow(), 1);
+                System.out.println(product);
+                System.out.println(amount);
+                System.out.println(stock);
+                System.out.println(loginUser.getUsername());
+                
+                int updatedStock = stock - Integer.valueOf(amount);
+                
+                if(updatedStock >= 0){
+                    sqlite.addHistory(loginUser.getUsername(), product, Integer.valueOf(amount), timestamp.toString());
+                    sqlite.setProduct(product, Character.forDigit(updatedStock, 10));
+                }
+                
+                else{
+                    JOptionPane.showMessageDialog(null, "Not enough stock for this product.");
+                }
             }
         }
     }//GEN-LAST:event_purchaseBtnActionPerformed

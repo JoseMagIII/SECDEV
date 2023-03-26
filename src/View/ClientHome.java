@@ -25,6 +25,7 @@ public class ClientHome extends javax.swing.JPanel {
     public MgmtLogs mgmtLogs;
     public MgmtProduct mgmtProduct;
     public MgmtUser mgmtUser;
+    public User thisUser = null;
     
     private CardLayout contentView = new CardLayout();
     
@@ -32,10 +33,11 @@ public class ClientHome extends javax.swing.JPanel {
         initComponents();
     }
     
-    public void init(SQLite sqlite){
-        mgmtHistory = new MgmtHistory(sqlite);
+    public void init(SQLite sqlite, User thatUser){
+        thisUser = thatUser;
+        mgmtHistory = new MgmtHistory(sqlite, thatUser, false);
         mgmtLogs = new MgmtLogs(sqlite);
-        mgmtProduct = new MgmtProduct(sqlite);
+        mgmtProduct = new MgmtProduct(sqlite, true, false, false, false, thatUser);
         mgmtUser = new MgmtUser(sqlite);
     
         Content.setLayout(contentView);
@@ -174,7 +176,7 @@ public class ClientHome extends javax.swing.JPanel {
     }//GEN-LAST:event_productsBtnActionPerformed
 
     private void historyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyBtnActionPerformed
-        mgmtHistory.init();
+        mgmtHistory.init2();
         usersBtn.setForeground(Color.black);
         productsBtn.setForeground(Color.black);
         historyBtn.setForeground(Color.red);

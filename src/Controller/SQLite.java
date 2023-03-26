@@ -345,4 +345,17 @@ public class SQLite {
             System.out.print(ex);
         }
     }
+    
+    public void setProduct(String name, char count) {
+        
+        String sql = "UPDATE product SET stock='"  + count + "' WHERE name='" + name + "';";
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Count updated");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
 }

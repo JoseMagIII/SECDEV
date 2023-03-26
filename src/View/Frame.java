@@ -231,7 +231,7 @@ public class Frame extends javax.swing.JFrame {
         forgotPassPnl.frame = this;
         
         adminHomePnl.init(main.sqlite);
-        clientHomePnl.init(main.sqlite);
+        // clientHomePnl.init(main.sqlite);
         managerHomePnl.init(main.sqlite);
         staffHomePnl.init(main.sqlite);
         
@@ -246,7 +246,7 @@ public class Frame extends javax.swing.JFrame {
         Content.add(adminHomePnl, "adminHomePnl");
         Content.add(managerHomePnl, "managerHomePnl");
         Content.add(staffHomePnl, "staffHomePnl");
-        Content.add(clientHomePnl, "clientHomePnl");
+        // Content.add(clientHomePnl, "clientHomePnl");
         
         this.setVisible(true);
     }
@@ -258,20 +258,40 @@ public class Frame extends javax.swing.JFrame {
             case 1: frameView.show(Container, "loginPnl");
             break;
             
-            case 2: clientHomePnl.showPnl("home");
+            case 2: adminBtn.setVisible(false);
+                    clientBtn.setVisible(true);
+                    managerBtn.setVisible(false);
+                    staffBtn.setVisible(false);
+                    
+                    clientHomePnl.init(main.sqlite, thisUser);
+                    Content.add(clientHomePnl, "clientHomePnl");
+                    clientHomePnl.showPnl("home");
                     contentView.show(Content, "clientHomePnl");
             break;
             
             case 3: staffHomePnl.showPnl("home");
                     contentView.show(Content, "staffHomePnl");
+                    adminBtn.setVisible(false);
+                    clientBtn.setVisible(false);
+                    managerBtn.setVisible(false);
+                    staffBtn.setVisible(true);
             break;
             
             case 4: managerHomePnl.showPnl("home");
                     contentView.show(Content, "managerHomePnl");
+                    adminBtn.setVisible(false);
+                    clientBtn.setVisible(false);
+                    managerBtn.setVisible(true);
+                    staffBtn.setVisible(false);
             break;
             
             case 5: adminHomePnl.showPnl("home");
                     contentView.show(Content, "adminHomePnl");
+                    adminBtn.setVisible(true);
+                    clientBtn.setVisible(false);
+                    managerBtn.setVisible(false);
+                    staffBtn.setVisible(false);
+                    
             break;
             
         }

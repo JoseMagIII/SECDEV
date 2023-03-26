@@ -35,7 +35,7 @@ public class ClientHome extends javax.swing.JPanel {
     
     public void init(SQLite sqlite, User thatUser){
         thisUser = thatUser;
-        mgmtHistory = new MgmtHistory(sqlite, thatUser, false);
+        mgmtHistory = new MgmtHistory(sqlite, thatUser, true);
         mgmtLogs = new MgmtLogs(sqlite);
         mgmtProduct = new MgmtProduct(sqlite, true, false, false, false, thatUser);
         mgmtUser = new MgmtUser(sqlite);

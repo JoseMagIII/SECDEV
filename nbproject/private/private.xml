@@ -3,15 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/View/AdminHome.java</file>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/View/MgmtHistory.java</file>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/View/StaffHome.java</file>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/View/ClientHome.java</file>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/View/Login.java</file>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/Controller/SQLite.java</file>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/View/MgmtProduct.java</file>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/View/ManagerHome.java</file>
-            <file>file:/C:/Users/Iser/Desktop/FINAL%20NA-20230304T143826Z-001/FINAL%20NA/CSSECDV%20MP/SECDEV/src/View/Frame.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/View/Frame.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/Model/User.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/Model/Product.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/View/MgmtHistory.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/View/MgmtProduct.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/Controller/SQLite.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/View/AdminHome.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/View/ManagerHome.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/Controller/Main.java</file>
+            <file>file:/C:/Users/Sabrina/OneDrive/Desktop/CSSECDV/MP2/SECDEV/src/View/ClientHome.java</file>
         </group>
     </open-files>
 </project-private>

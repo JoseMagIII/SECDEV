@@ -305,6 +305,18 @@ public class SQLite {
         }
     }
     
+    public void removeProduct(String product) {
+        String sql = "DELETE FROM product WHERE name='" + product + "';";
+
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Product " + product + " has been deleted.");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    
     public Product getProduct(String name){
         String sql = "SELECT name, stock, price FROM product WHERE name='" + name + "';";
         Product product = null;
@@ -349,6 +361,32 @@ public class SQLite {
     public void setProduct(String name, char count) {
         
         String sql = "UPDATE product SET stock='"  + count + "' WHERE name='" + name + "';";
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Count updated");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
+    
+    public void setProductName(String name, String newName) {
+        
+        String sql = "UPDATE product SET name='"  + newName + "' WHERE name='" + name + "';";
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Count updated");
+        } catch (Exception ex) {
+            System.out.print(ex);
+}
+    }
+    
+    public void setPrice(String name, double price) {
+        
+        String sql = "UPDATE product SET price='"  + price + "' WHERE name='" + name + "';";
         
         try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()) {

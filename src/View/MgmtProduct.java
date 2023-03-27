@@ -254,6 +254,12 @@ public class MgmtProduct extends javax.swing.JPanel {
         int result = JOptionPane.showConfirmDialog(null, message, "ADD PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
         if (result == JOptionPane.OK_OPTION) {
+            String productName = nameFld.getText();
+            int productStock = Integer.parseInt(stockFld.getText());
+            double productPrice = Double.parseDouble(priceFld.getText());
+            
+            sqlite.addProduct(productName, productStock, productPrice);
+            
             System.out.println(nameFld.getText());
             System.out.println(stockFld.getText());
             System.out.println(priceFld.getText());
@@ -274,9 +280,19 @@ public class MgmtProduct extends javax.swing.JPanel {
                 "Edit Product Details:", nameFld, stockFld, priceFld
             };
 
+            String origString = tableModel.getValueAt(table.getSelectedRow(), 0).toString();
+
             int result = JOptionPane.showConfirmDialog(null, message, "EDIT PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
 
             if (result == JOptionPane.OK_OPTION) {
+                String productName = nameFld.getText();
+                int productStock = Integer.parseInt(stockFld.getText());
+                double productPrice = Double.parseDouble(priceFld.getText());
+                
+                sqlite.setProductName(origString, productName);
+                sqlite.setProduct(origString, Character.forDigit(productStock, 10));
+                sqlite.setPrice(origString, productPrice);
+                
                 System.out.println(nameFld.getText());
                 System.out.println(stockFld.getText());
                 System.out.println(priceFld.getText());
@@ -289,6 +305,7 @@ public class MgmtProduct extends javax.swing.JPanel {
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + tableModel.getValueAt(table.getSelectedRow(), 0) + "?", "DELETE PRODUCT", JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
+                sqlite.removeProduct(tableModel.getValueAt(table.getSelectedRow(), 0) + "");
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
             }
         }

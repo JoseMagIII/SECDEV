@@ -218,17 +218,28 @@ public class MgmtProduct extends javax.swing.JPanel {
             if (result == JOptionPane.OK_OPTION) {
                 String product = (String) tableModel.getValueAt(table.getSelectedRow(), 0);
                 String amount = stockFld.getText();
+                
+                
+                
+                
                 int stock = (int) tableModel.getValueAt(table.getSelectedRow(), 1);
                 System.out.println(product);
                 System.out.println(amount);
                 System.out.println(stock);
                 System.out.println(loginUser.getUsername());
                 
+                if(!amount.matches("[0-9]+")){
+                    JOptionPane.showMessageDialog(null, "Amount contains letters or symbols.");
+                    return;
+                }
+                
                 int updatedStock = stock - Integer.valueOf(amount);
+                
+
                 
                 if(updatedStock >= 0){
                     sqlite.addHistory(loginUser.getUsername(), product, Integer.valueOf(amount), timestamp.toString());
-                    sqlite.setProduct(product, Character.forDigit(updatedStock, 10));
+                    sqlite.setProduct(product, updatedStock);
                 }
                 
                 else{
@@ -255,8 +266,56 @@ public class MgmtProduct extends javax.swing.JPanel {
 
         if (result == JOptionPane.OK_OPTION) {
             String productName = nameFld.getText();
-            int productStock = Integer.parseInt(stockFld.getText());
-            double productPrice = Double.parseDouble(priceFld.getText());
+            
+            int productStock = 0;
+            double productPrice = 0;
+            
+            
+            if(!stockFld.getText().matches("[0-9]+")){
+                    JOptionPane.showMessageDialog(null, "Stock field contains letters or symbols.");
+                    return;
+                }
+            
+            if(!priceFld.getText().matches("[0-9]+")){
+                    JOptionPane.showMessageDialog(null, "Price field contains letters or symbols.");
+                    return;
+                }
+            
+            
+            if(!"".equals(stockFld.getText()))
+                productStock = Integer.parseInt(stockFld.getText());
+            
+            if(!"".equals(priceFld.getText()))
+                productPrice = Double.parseDouble(priceFld.getText());
+            
+            
+            
+            
+            ArrayList<Product> productList = sqlite.getProduct();
+            
+            if("".equals(productName))
+                {
+                    JOptionPane.showMessageDialog(null, "Product name cannot be empty.");
+                    return;
+                }
+            
+            for(Product i : productList){
+                    if(i.getName().toLowerCase().equals(productName.toLowerCase()))
+                    {
+                        JOptionPane.showMessageDialog(null, "Product name already taken");
+                        return;
+                    }
+                }
+            
+            if(productStock < 0){
+                    JOptionPane.showMessageDialog(null, "Cannot set product stock to a negative number");
+                    return;
+                }
+                
+            if(productPrice < 0){
+                JOptionPane.showMessageDialog(null, "Cannot set product price to a negative number");
+                return;
+            }
             
             sqlite.addProduct(productName, productStock, productPrice);
             
@@ -283,14 +342,67 @@ public class MgmtProduct extends javax.swing.JPanel {
             String origString = tableModel.getValueAt(table.getSelectedRow(), 0).toString();
 
             int result = JOptionPane.showConfirmDialog(null, message, "EDIT PRODUCT", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null);
-
+            
+            
+            
             if (result == JOptionPane.OK_OPTION) {
                 String productName = nameFld.getText();
-                int productStock = Integer.parseInt(stockFld.getText());
-                double productPrice = Double.parseDouble(priceFld.getText());
+            
+                int productStock = 0;
+                double productPrice = 0;
+                
+                if(!stockFld.getText().matches("[0-9]+")){
+                    JOptionPane.showMessageDialog(null, "Stock field contains letters or symbols.");
+                    return;
+                }
+            
+                if(!priceFld.getText().matches("[0-9]+")){
+                    JOptionPane.showMessageDialog(null, "Price field contains letters or symbols.");
+                    return;
+                }
+                
+                
+                if(!"".equals(stockFld.getText()))
+                    productStock = Integer.parseInt(stockFld.getText());
+
+                if(!"".equals(priceFld.getText()))
+                    productPrice = Double.parseDouble(priceFld.getText());
+                
+                
+                
+                ArrayList<Product> productList = sqlite.getProduct();
+                
+                
+                if(productStock < 0){
+                    JOptionPane.showMessageDialog(null, "Cannot set product stock to a negative number");
+                    return;
+                }
+                
+                if(productPrice < 0){
+                    JOptionPane.showMessageDialog(null, "Cannot set product price to a negative number");
+                    return;
+                }
+                
+                if("".equals(productName))
+                {
+                    JOptionPane.showMessageDialog(null, "Product name cannot be empty.");
+                    return;
+                }
+                
+                for(Product i : productList){
+                    
+                    if(productName.toLowerCase().equals(origString.toLowerCase()))
+                        break;
+                    
+                    if(i.getName().toLowerCase().equals(productName.toLowerCase()))
+                    {
+                        JOptionPane.showMessageDialog(null, "Product name already taken");
+                        return;
+                    }
+                }
                 
                 sqlite.setProductName(origString, productName);
-                sqlite.setProduct(origString, Character.forDigit(productStock, 10));
+                sqlite.setProduct(origString, productStock);
                 sqlite.setPrice(origString, productPrice);
                 
                 System.out.println(nameFld.getText());

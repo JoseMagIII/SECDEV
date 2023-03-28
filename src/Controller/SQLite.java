@@ -358,7 +358,7 @@ public class SQLite {
         }
     }
     
-    public void setProduct(String name, char count) {
+    public void setProduct(String name, int count) {
         
         String sql = "UPDATE product SET stock='"  + count + "' WHERE name='" + name + "';";
         

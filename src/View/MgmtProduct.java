@@ -276,7 +276,7 @@ public class MgmtProduct extends javax.swing.JPanel {
                     return;
                 }
             
-            if(!priceFld.getText().matches("[0-9]+")){
+            if(!priceFld.getText().matches("[0-9/.]+")){
                     JOptionPane.showMessageDialog(null, "Price field contains letters or symbols.");
                     return;
                 }
@@ -356,7 +356,7 @@ public class MgmtProduct extends javax.swing.JPanel {
                     return;
                 }
             
-                if(!priceFld.getText().matches("[0-9]+")){
+                if(!priceFld.getText().matches("[0-9/.]+")){
                     JOptionPane.showMessageDialog(null, "Price field contains letters or symbols.");
                     return;
                 }

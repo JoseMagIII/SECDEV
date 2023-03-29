@@ -25,11 +25,34 @@ public class AdminHome extends javax.swing.JPanel {
     public MgmtLogs mgmtLogs;
     public MgmtProduct mgmtProduct;
     public MgmtUser mgmtUser;
+    public User thisUser = null;
     
     private CardLayout contentView = new CardLayout();
     
     public AdminHome() {
         initComponents();
+    }
+    
+    
+    public void init(SQLite sqlite, User thatUser){
+        thisUser = thatUser;
+        mgmtHistory = new MgmtHistory(sqlite);
+        mgmtLogs = new MgmtLogs(sqlite);
+        mgmtProduct = new MgmtProduct(sqlite, true, false, false, false);
+        mgmtUser = new MgmtUser(sqlite);
+        
+        Content.setLayout(contentView);
+        Content.add(new Home("WELCOME ADMIN!", new java.awt.Color(51, 153, 255)), "home");
+        Content.add(this.mgmtUser, "mgmtUser");
+        Content.add(this.mgmtHistory, "mgmtHistory");
+        Content.add(this.mgmtProduct, "mgmtProduct");
+        Content.add(this.mgmtLogs, "mgmtLogs");
+        
+//        UNCOMMENT TO DISABLE BUTTONS
+        historyBtn.setVisible(false);
+//        usersBtn.setVisible(false);
+        productsBtn.setVisible(false);
+//        logsBtn.setVisible(false);
     }
     
     public void init(SQLite sqlite){
@@ -156,7 +179,7 @@ public class AdminHome extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void usersBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usersBtnActionPerformed
-        mgmtUser.init();
+        mgmtUser.init(thisUser);
         usersBtn.setForeground(Color.red);
         productsBtn.setForeground(Color.black);
         historyBtn.setForeground(Color.black);

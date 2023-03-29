@@ -7,6 +7,7 @@ package View;
 
 import Controller.SQLite;
 import Model.User;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -24,6 +25,7 @@ public class MgmtUser extends javax.swing.JPanel {
 
     public SQLite sqlite;
     public DefaultTableModel tableModel;
+    public User thisUser = null;
     
     public MgmtUser(SQLite sqlite) {
         initComponents();
@@ -39,6 +41,26 @@ public class MgmtUser extends javax.swing.JPanel {
     }
     
     public void init(){
+        //      CLEAR TABLE
+        for(int nCtr = tableModel.getRowCount(); nCtr > 0; nCtr--){
+            tableModel.removeRow(0);
+        }
+        
+//      LOAD CONTENTS
+        ArrayList<User> users = sqlite.getUsers();
+        for(int nCtr = 0; nCtr < users.size(); nCtr++){
+            tableModel.addRow(new Object[]{
+                users.get(nCtr).getUsername(), 
+                users.get(nCtr).getPassword(), 
+                users.get(nCtr).getRole(), 
+                users.get(nCtr).getLocked()});
+        }
+    }
+    
+    public void init(User thatUser){
+        
+        thisUser = thatUser;
+        
         //      CLEAR TABLE
         for(int nCtr = tableModel.getRowCount(); nCtr > 0; nCtr--){
             tableModel.removeRow(0);
@@ -179,6 +201,8 @@ public class MgmtUser extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editRoleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editRoleBtnActionPerformed
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String time = timestamp.toString();
         if(table.getSelectedRow() >= 0){
             String[] options = {"1-DISABLED","2-CLIENT","3-STAFF","4-MANAGER","5-ADMIN"};
             JComboBox optionList = new JComboBox(options);
@@ -195,6 +219,9 @@ public class MgmtUser extends javax.swing.JPanel {
                 //System.out.println("TEST");
                 System.out.println(role);
                 
+                
+                
+                sqlite.addLogs("NOTICE", thisUser.getUsername(), username + " role has been changed to " + role, time);
                 sqlite.setRole(username, role);
             }
         }

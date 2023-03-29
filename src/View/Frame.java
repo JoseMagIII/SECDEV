@@ -230,7 +230,7 @@ public class Frame extends javax.swing.JFrame {
         registerPnl.frame = this;
         forgotPassPnl.frame = this;
         
-        adminHomePnl.init(main.sqlite);
+        // adminHomePnl.init(main.sqlite);
         // clientHomePnl.init(main.sqlite);
         managerHomePnl.init(main.sqlite);
         staffHomePnl.init(main.sqlite);
@@ -243,7 +243,7 @@ public class Frame extends javax.swing.JFrame {
         frameView.show(Container, "loginPnl");
         
         Content.setLayout(contentView);
-        Content.add(adminHomePnl, "adminHomePnl");
+        // Content.add(adminHomePnl, "adminHomePnl");
         Content.add(managerHomePnl, "managerHomePnl");
         Content.add(staffHomePnl, "staffHomePnl");
         // Content.add(clientHomePnl, "clientHomePnl");
@@ -285,7 +285,11 @@ public class Frame extends javax.swing.JFrame {
                     staffBtn.setVisible(false);
             break;
             
-            case 5: adminHomePnl.showPnl("home");
+            case 5: 
+                    adminHomePnl.init(main.sqlite, thisUser);
+                    Content.add(adminHomePnl, "adminHomePnl");
+                
+                    adminHomePnl.showPnl("home");
                     contentView.show(Content, "adminHomePnl");
                     adminBtn.setVisible(true);
                     clientBtn.setVisible(false);

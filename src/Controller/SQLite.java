@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class SQLite {
     
-    public int DEBUG_MODE = 0;
+    public int DEBUG_MODE = 1;
     String driverURL = "jdbc:sqlite:" + "database.db";
     
     public void createNewDatabase() {
@@ -161,12 +161,16 @@ public class SQLite {
     public void addLogs(String event, String username, String desc, String timestamp) {
         String sql = "INSERT INTO logs(event,username,desc,timestamp) VALUES('" + event + "','" + username + "','" + desc + "','" + timestamp + "')";
         
-        try (Connection conn = DriverManager.getConnection(driverURL);
+        if(DEBUG_MODE == 1){
+            try (Connection conn = DriverManager.getConnection(driverURL);
             Statement stmt = conn.createStatement()){
             stmt.execute(sql);
-        } catch (Exception ex) {
-            System.out.print(ex);
+            } catch (Exception ex) {
+                System.out.print(ex);
+            }
         }
+        
+        
     }
     
     public void addProduct(String name, int stock, double price) {

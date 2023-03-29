@@ -400,4 +400,17 @@ public class SQLite {
             System.out.print(ex);
         }
     }
+    
+    public void setPassword(String username, String password) {
+        
+        String sql = "UPDATE users SET password='"  + password + "' WHERE username='" + username + "';";
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Password updated");
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }
 }

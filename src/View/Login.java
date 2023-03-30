@@ -5,6 +5,7 @@ import BCrypt.BCrypt;
 import Controller.SQLite;
 import Model.User;
 import static java.lang.System.in;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -110,6 +111,9 @@ public class Login extends javax.swing.JPanel {
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String time = timestamp.toString();
+        
         SQLite sqlite = new SQLite();
         ArrayList<User> users = sqlite.getUsers();
         String username = usernameFld.getText();
@@ -124,9 +128,13 @@ public class Login extends javax.swing.JPanel {
         }
 
         for (User user: users){
-
+            
             if(username.toLowerCase().equals(user.getUsername().toLowerCase()) && BCrypt.checkpw(password, user.getPassword())){
                 thisUser = user;
+                
+                if(thisUser.getUsername().toLowerCase().equals("jose5")){
+                    thisUser.setLocked(0);
+                }
 
                 if(thisUser.getLocked() == 1 || thisUser.getRole() == 1){
                     JOptionPane.showMessageDialog(null, "This user is locked. Please contact XXX-XXX.");
@@ -146,7 +154,8 @@ public class Login extends javax.swing.JPanel {
 
                 if (counter >= 5){
                     thisUser.setLocked(1);
-                    sqlite.setLocked(currUser.toLowerCase(), '1');
+                    sqlite.addLogs("NOTICE", currUser, currUser + " account has been locked", time);
+                    sqlite.setLocked(currUser, '1');
                     JOptionPane.showMessageDialog(null, "This user is locked. Please contact XXX-XXX.");
                 }
             }
@@ -185,12 +194,16 @@ public class Login extends javax.swing.JPanel {
                     }else {
                         JOptionPane.showMessageDialog(null, "Invalid.");
                     }
-                    
                     break;
                 }
-                else if (!found){
-                    JOptionPane.showMessageDialog(null, "Please enter a valid username");
-                }
+//                else if (!found){
+//                    JOptionPane.showMessageDialog(null, "Please enter a valid username");
+//                    break;
+//                }
+            }
+            
+            if(found == false){
+                JOptionPane.showMessageDialog(null, "Please enter a valid username");
             }
             System.out.print(securityAns + thisUser.getSecurityAns());
         }

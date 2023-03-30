@@ -250,6 +250,8 @@ public class MgmtProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_purchaseBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String time = timestamp.toString();
         JTextField nameFld = new JTextField();
         JTextField stockFld = new JTextField();
         JTextField priceFld = new JTextField();
@@ -317,6 +319,7 @@ public class MgmtProduct extends javax.swing.JPanel {
                 return;
             }
             
+            sqlite.addLogs("NOTICE", loginUser.getUsername(), loginUser.getUsername() + " has added product " + productName, time);
             sqlite.addProduct(productName, productStock, productPrice);
             
             System.out.println(nameFld.getText());
@@ -326,6 +329,9 @@ public class MgmtProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String time = timestamp.toString();
+        
         if(table.getSelectedRow() >= 0){
             JTextField nameFld = new JTextField(tableModel.getValueAt(table.getSelectedRow(), 0) + "");
             JTextField stockFld = new JTextField(tableModel.getValueAt(table.getSelectedRow(), 1) + "");
@@ -401,6 +407,7 @@ public class MgmtProduct extends javax.swing.JPanel {
                     }
                 }
                 
+                sqlite.addLogs("NOTICE", loginUser.getUsername(), loginUser.getUsername() + " has edited product " + productName, time);
                 sqlite.setProductName(origString, productName);
                 sqlite.setProduct(origString, productStock);
                 sqlite.setPrice(origString, productPrice);
@@ -413,10 +420,14 @@ public class MgmtProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String time = timestamp.toString();
+        
         if(table.getSelectedRow() >= 0){
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + tableModel.getValueAt(table.getSelectedRow(), 0) + "?", "DELETE PRODUCT", JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
+                sqlite.addLogs("NOTICE", loginUser.getUsername(), loginUser.getUsername() + " has deleted product " + tableModel.getValueAt(table.getSelectedRow(), 0), time);
                 sqlite.removeProduct(tableModel.getValueAt(table.getSelectedRow(), 0) + "");
                 System.out.println(tableModel.getValueAt(table.getSelectedRow(), 0));
             }

@@ -151,8 +151,9 @@ public class ForgotPass extends javax.swing.JPanel {
             String hashed = BCrypt.hashpw(changePasswordFld.getText(), BCrypt.gensalt(12));
 
             if(passwordValidates(changePasswordFld.getText()) >= 2){
-                frame.deleteAction(thisUser.getUsername());
-                frame.registerAction(thisUser.getUsername(), hashed, changeConfpassFld.getText(), thisUser.getSecurityAns());
+//                frame.deleteAction(thisUser.getUsername());
+//                frame.registerAction(thisUser.getUsername(), hashed, changeConfpassFld.getText(), thisUser.getSecurityAns());
+                frame.forgotPassAction(thisUser.getUsername(), hashed, changeConfpassFld.getText(), thisUser.getSecurityAns());
                 JOptionPane.showMessageDialog(null, "Password has successfully been changed.");
                 frame.loginNav();
             }

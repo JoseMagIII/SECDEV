@@ -2,6 +2,7 @@ package View;
 
 import Controller.Main;
 import Model.User;
+import java.sql.Timestamp;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -232,8 +233,8 @@ public class Frame extends javax.swing.JFrame {
         
         // adminHomePnl.init(main.sqlite);
         // clientHomePnl.init(main.sqlite);
-        managerHomePnl.init(main.sqlite);
-        staffHomePnl.init(main.sqlite);
+        //managerHomePnl.init(main.sqlite);
+        //staffHomePnl.init(main.sqlite);
         
         Container.setLayout(frameView);
         Container.add(loginPnl, "loginPnl");
@@ -244,8 +245,8 @@ public class Frame extends javax.swing.JFrame {
         
         Content.setLayout(contentView);
         // Content.add(adminHomePnl, "adminHomePnl");
-        Content.add(managerHomePnl, "managerHomePnl");
-        Content.add(staffHomePnl, "staffHomePnl");
+        //Content.add(managerHomePnl, "managerHomePnl");
+        //Content.add(staffHomePnl, "staffHomePnl");
         // Content.add(clientHomePnl, "clientHomePnl");
         
         this.setVisible(true);
@@ -269,7 +270,10 @@ public class Frame extends javax.swing.JFrame {
                     contentView.show(Content, "clientHomePnl");
             break;
             
-            case 3: staffHomePnl.showPnl("home");
+            case 3: staffHomePnl.init(main.sqlite, thisUser);
+                    Content.add(staffHomePnl, "staffHomePnl");
+                
+                    staffHomePnl.showPnl("home");
                     contentView.show(Content, "staffHomePnl");
                     adminBtn.setVisible(false);
                     clientBtn.setVisible(false);
@@ -277,7 +281,10 @@ public class Frame extends javax.swing.JFrame {
                     staffBtn.setVisible(true);
             break;
             
-            case 4: managerHomePnl.showPnl("home");
+            case 4: managerHomePnl.init(main.sqlite, thisUser);
+                    Content.add(managerHomePnl, "managerHomePnl");
+                
+                    managerHomePnl.showPnl("home");
                     contentView.show(Content, "managerHomePnl");
                     adminBtn.setVisible(false);
                     clientBtn.setVisible(false);
@@ -324,7 +331,20 @@ public class Frame extends javax.swing.JFrame {
         frameView.show(Container, "forgotPassPnl");
     }
     
+    public void forgotPassAction(String username, String password, String confpass, String securityQuestion){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String time = timestamp.toString();
+        
+        main.sqlite.removeUser(username);
+        main.sqlite.addUser(username, password, securityQuestion);
+        main.sqlite.addLogs("NOTICE", username, username + " has changed their password.", time);
+    }
+    
     public void registerAction(String username, String password, String confpass, String securityQuestion){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String time = timestamp.toString();
+        
+        main.sqlite.addLogs("NOTICE", username, username + " has registered a new account.", time);
         main.sqlite.addUser(username, password, securityQuestion);
     }
     
